@@ -1,0 +1,8 @@
+﻿@model List<TestApplication.Models.Person>
+
+@{ 
+    foreach (var item in Model)
+    {
+        <div>@item.name</div>
+    }
+}
