@@ -13,9 +13,9 @@ namespace TestApplication.Models
 
         public string gender { get; set; }
 
-        public string father_id { get; set; }
+        public int? father_id { get; set; }
 
-        public string mother_id { get; set; }
+        public int? mother_id { get; set; }
 
         public int place_id { get; set; }
 

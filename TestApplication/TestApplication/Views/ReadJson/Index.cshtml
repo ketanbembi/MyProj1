@@ -1,8 +1,53 @@
-﻿@model List<TestApplication.Models.Person>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<TestApplication.Models.PersonDetail>
+@*@model List<TestApplication.Models.PersonDetail>*@
 
-@{ 
-    foreach (var item in Model)
-    {
-        <div>@item.name</div>
-    }
+<h3>@ViewBag.Message</h3>
+@ViewBag.CurrentName
+@ViewBag.IsMale
+@ViewBag.IsFemale
+
+@using (Ajax.BeginForm("Index", "ReadJson", new AjaxOptions { UpdateTargetId = "result" }))
+{
+    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+    @*<input type="text" name="Name" value="" />*@
+    <input type="submit" name="submit" value="Search" />
+    <br />
+    <div>
+        <text>Gender:</text>
+        <input name="IsMale" @(ViewBag.IsMaleFilter ? "checked" : "") value="true" type="checkbox" /><text>Male</text>
+        <input name="IsFemale" @(ViewBag.IsFemaleFilter ? "checked" : "") value="true" type="checkbox" /><text>Female</text>
+    </div>
 }
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Gender</td>
+                    <td>@item.BirthPlace</td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+@Html.PagedListPager(Model, pageNumber => Url.Action("Index", new
+{
+    pageNumber,
+    currentFilter = ViewBag.CurrentFilter,
+    currentMaleFilter = ViewBag.IsMaleFilter,
+    currentFemaleFilter = ViewBag.IsFemaleFilter
+}))
