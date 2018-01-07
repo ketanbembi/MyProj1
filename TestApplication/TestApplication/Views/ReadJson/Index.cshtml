@@ -1,32 +1,32 @@
 ﻿@using PagedList;
 @using PagedList.Mvc;
 @model IPagedList<TestApplication.Models.PersonDetail>
-@*@model List<TestApplication.Models.PersonDetail>*@
-
-<h3>@ViewBag.Message</h3>
-@ViewBag.CurrentName
-@ViewBag.IsMale
-@ViewBag.IsFemale
-
+<br />
 @using (Ajax.BeginForm("Index", "ReadJson", new AjaxOptions { UpdateTargetId = "result" }))
 {
     @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-    @*<input type="text" name="Name" value="" />*@
     <input type="submit" name="submit" value="Search" />
     <br />
     <div>
-        <text>Gender:</text>
-        <input name="IsMale" @(ViewBag.IsMaleFilter ? "checked" : "") value="true" type="checkbox" /><text>Male</text>
-        <input name="IsFemale" @(ViewBag.IsFemaleFilter ? "checked" : "") value="true" type="checkbox" /><text>Female</text>
+        <div style="display:inline-block">
+            <text>Gender:</text>
+        </div>
+        <div style="display:inline-block">
+            <input name="IsMale" @(ViewBag.IsMaleFilter ? "checked" : "") value="true" type="checkbox" /><text>Male</text>
+        </div>
+        <div style="display:inline-block">
+            <input name="IsFemale" @(ViewBag.IsFemaleFilter ? "checked" : "") value="true" type="checkbox" /><text>Female</text>
+        </div>
     </div>
 }
+<br />
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>City</th>
+        <tr style="background-color:#84e863;color:white;">
+            <th>ID</th>
+            <th>NAME</th>
+            <th>GENDER</th>
+            <th>BIRTHPLACE</th>
         </tr>
     </thead>
     <tbody>

@@ -157,7 +157,6 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonDetail.cs" />
     <Compile Include="Models\Place.cs" />
-    <Compile Include="Models\SearchPerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

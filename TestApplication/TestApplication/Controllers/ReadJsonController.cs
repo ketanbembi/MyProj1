@@ -1,20 +1,27 @@
 ﻿using Newtonsoft.Json;
 using PagedList;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using TestApplication.Models;
 
 namespace TestApplication.Controllers
 {
     public class ReadJsonController : Controller
     {
-        // GET: ReadJson
+        /// <summary>
+        /// Controller for search person
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="currentMaleFilter"></param>
+        /// <param name="currentFemaleFilter"></param>
+        /// <param name="IsMale"></param>
+        /// <param name="IsFemale"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         public ViewResult Index(string searchString, string currentFilter, bool currentMaleFilter=false, bool currentFemaleFilter = false, bool IsMale = false, bool IsFemale = false, int? pageNumber = null)
         {
             if (searchString != null)
@@ -32,7 +39,7 @@ namespace TestApplication.Controllers
             ViewBag.IsMaleFilter = IsMale;
             ViewBag.IsFemaleFilter = IsFemale;
 
-           var a = DateTime.Now;
+            //load json file data
             string file = Server.MapPath("~/App_Data/data_large.json");
             using (WebClient client = new WebClient())
             using (Stream stream = client.OpenRead(file))
@@ -75,6 +82,7 @@ namespace TestApplication.Controllers
                         personDetailList.Add(data);
                     }
 
+                    //apply search filter
                     if (!string.IsNullOrEmpty(searchString))
                     {
                         personDetailList = personDetailList.Where(e => e.Name.ToLower().Contains(searchString.ToLower())).ToList();
@@ -87,9 +95,8 @@ namespace TestApplication.Controllers
                     {
                         personDetailList = personDetailList.Where(e => e.Gender.Equals("Female")).ToList();
                     }
-
-                    var b = DateTime.Now;
-                    ViewBag.Message = b.Subtract(a).TotalMinutes.ToString();
+                    
+                    //set pagination
                     int pageSize = 10;
                     int pageNumberValue = (pageNumber ?? 1);
                     return View(personDetailList.ToList().ToPagedList(pageNumberValue, pageSize));
